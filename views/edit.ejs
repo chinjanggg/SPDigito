@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <%- include partials/head.ejs %>
+  <body>
+    <%- include partials/navbar.ejs %>
+    <div class="container">
+      <div class="form-container">
+        <form class="border border-info" method="post" action="/confirm">
+          <!-- Patient Info -->
+          <%- include partials/patientedit.ejs %>
+
+          <!-- Upload image -->
+          <div class="result-icon float-right">
+            <i
+              class="fas fa-image"
+              data-toggle="popover"
+              data-placement="right"
+              data-img="<%= imagefile %>"
+            ></i>
+          </div>
+
+          <!-- Result -->
+          <%- include partials/resultedit.ejs %>
+
+          <!-- Button -->
+          <%- include partials/editformbtn.ejs %>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>

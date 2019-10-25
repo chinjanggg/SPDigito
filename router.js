@@ -26,33 +26,21 @@ router.post("/postresult", (req, res) => {
   result.pulse = req.body.pulse;
   sess.result = result;
   console.log(req.session);
-  res.redirect("/mresult");
+  res.redirect("/mconfirmation");
 });
 
 //Show form result
-router.get("/mresult", (req, res) => {
+router.get("/medit", (req, res) => {
   let sess = req.session;
   var pid = sess.pid;
   var result = sess.result;
   var pinfo = get_pdata(pid);
-  res.render("mresult", {
-    title: "Manual Result",
+  res.render("medit", {
+    title: "Edit",
     pid: pid,
     pinfo: pinfo,
     result: result
   });
-});
-
-//Recheck
-router.post("/mconfirm", (req, res) => {
-  let sess = req.session;
-  sess.pid = req.body.pid.toUpperCase();
-  sess.result = { sys: null, dia: null, pulse: null };
-  sess.result.sys = req.body.sys;
-  sess.result.dia = req.body.dia;
-  sess.result.pulse = req.body.pulse;
-
-  res.redirect("/mconfirmation");
 });
 
 //Confirm
@@ -101,16 +89,16 @@ router.get("/uploads/:upload", (req, res) => {
 
 router.get("/ocr/:pid/:img", digit_ocr);
 
-//Display OCR result
-router.get("/result", (req, res) => {
+//OCR edit page
+router.get("/edit", (req, res) => {
   let sess = req.session;
   var img = sess.img;
   var pid = sess.pid;
   var result = sess.result;
   var pinfo = get_pdata(pid);
 
-  res.render("result", {
-    title: "Result",
+  res.render("edit", {
+    title: "Edit",
     imagefile: "/uploads/" + img,
     pid: pid,
     pinfo: pinfo,
@@ -221,7 +209,7 @@ function digit_ocr(req, res) {
     if (req.session.pid) {
       //For Web
       sess.result = result;
-      res.redirect("/result");
+      res.redirect("/confirmation");
     } else {
       //There's no session, For Android Application
       res.status(200).end();

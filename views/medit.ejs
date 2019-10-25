@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+  <%- include partials/head.ejs %>
+  <body>
+    <%- include partials/navbar.ejs %>
+    <div class="container">
+      <div class="form-container">
+        <form class="border border-info" method="post" action="/postresult">
+          <!-- Patient Info -->
+          <%- include partials/patientedit.ejs %>
+
+          <!-- Result -->
+          <%- include partials/resultedit.ejs %>
+
+          <!-- Button -->
+          <%- include partials/editformbtn.ejs %>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>
