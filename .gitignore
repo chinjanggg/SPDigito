@@ -2,3 +2,5 @@
 .env
 node_modules
 uploads
+data/res-data.json
+python/__pycache__
