@@ -23,23 +23,14 @@
           <%- include partials/resultedit.ejs %>
 
           <!-- Button -->
-          <div class="form-group">
-            <span class="text-left">
-              <a href="/" class="btn btn-outline-danger" role="button">
-                <i class="fas fa-times"></i>
-              </a>
-            </span>
-            <div class="float-right">
-              <button type="submit" class="btn btn-outline-success">
-                <i class="fas fa-check"></i>
-              </button>
-            </div>
-          </div>
+          <%- include partials/editformbtn.ejs %>
         </form>
+
+        <!-- Alternative method -->
         <div class="my-4">
           <a class="text-secondary" href="/imageupload">
-            <i><u>or let things run automatically with OCR</u></i></a
-          >
+            <i><u>or let things run automatically with OCR</u></i>
+          </a>
         </div>
       </div>
     </div>
