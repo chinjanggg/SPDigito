@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <%- include partials/head.ejs %>
+  <body>
+    <%- include partials/navbar.ejs %>
+    <div class="container">
+      <p class="header">Manual Form <i class="fas fa-feather-alt"></i></p>
+      <div class="form-container">
+        <form class="border border-info" method="post" action="/postresult">
+          <div class="form-group text-left">
+            <label for="pid"><h5>Patient ID</h5></label>
+            <input
+              type="text"
+              class="form-control"
+              name="pid"
+              pattern="(?:hr|HR)[0-9]{3}"
+              title="eg. HR123"
+              maxlength="5"
+              required
+            />
+          </div>
+
+          <%- include partials/resultedit.ejs %>
+
+          <!-- Button -->
+          <div class="form-group">
+            <span class="text-left">
+              <a href="/" class="btn btn-outline-danger" role="button">
+                <i class="fas fa-times"></i>
+              </a>
+            </span>
+            <div class="float-right">
+              <button type="submit" class="btn btn-outline-success">
+                <i class="fas fa-check"></i>
+              </button>
+            </div>
+          </div>
+        </form>
+        <div class="my-4">
+          <a class="text-secondary" href="/imageupload">
+            <i><u>or let things run automatically with OCR</u></i></a
+          >
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

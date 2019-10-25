@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+  <%- include partials/head.ejs %>
+  <body>
+    <%- include partials/navbar.ejs %>
+    <div class="container">
+      <p class="header">Image Upload <i class="fas fa-cloud-upload-alt"></i></p>
+      <div class="form-container">
+        <form
+          class="border border-info"
+          method="post"
+          action="/upload"
+          enctype="multipart/form-data"
+        >
+          <!-- Patient ID -->
+          <div class="form-group">
+            <label for="pid"><h5>Patient ID</h5></label>
+            <input
+              type="text"
+              class="form-control"
+              name="pid"
+              pattern="(?:hr|HR)[0-9]{3}"
+              title="eg. HR123"
+              maxlength="5"
+              required
+            />
+          </div>
+
+          <!-- Image file -->
+          <div class="form-group">
+            <label for="upload"><h5>Image file</h5></label>
+            <input
+              class="form-control btn btn-outline-secondary"
+              type="file"
+              name="upload"
+              required
+            />
+          </div>
+
+          <!-- Button -->
+          <div class="form-group text-center">
+            <a href="/" class="btn btn-outline-danger mx-1" role="button">
+              <i class="fas fa-times"></i>
+            </a>
+            <button type="submit" class="btn btn-outline-success mx-1">
+              <i class="fas fa-check"></i>
+            </button>
+          </div>
+        </form>
+        <div class="my-4">
+          <a class="text-secondary" href="/manualform">
+            <i><u>I don't have image</u></i></a
+          >
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <%- include partials/head.ejs %>
+  <body>
+    <%- include partials/navbar.ejs %>
+    <div class="container">
+      <p class="header">
+        <i>"Let us do your work"</i>
+      </p>
+      <!-- <i>and always praise the peach</i> -->
+      <div class="method-group row">
+        <div class="col-sm-6 col-md-6 text-secondary">
+          <div
+            class="method method-manual"
+            onclick="location.href='/manualform';"
+            title="Are you sure?"
+          >
+            <i class="fas fa-keyboard fa-5x"></i>
+            <br />
+            <h4>Manual</h4>
+            <div class="method-desc">
+              input values manually
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6 col-md-6">
+          <div
+            class="method method-ocr"
+            onclick="location.href='/imageupload';"
+            title="Nice idea!"
+          >
+            <i class="fas fa-images fa-5x"></i>
+            <br />
+            <h4>Image Upload</h4>
+            <div class="method-desc">
+              OCR values via image
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

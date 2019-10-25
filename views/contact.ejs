@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+  <%- include partials/head.ejs %>
+  <body>
+    <%- include partials/navbar.ejs %>
+    <div class="container">
+      <p class="header">Contact <i class="fab fa-telegram-plane"></i></p>
+      <div class="form-container">
+        <form class="border-peach" method="post" action="/postresult">
+          <div class="pimg">
+            <img
+              class="img-fluid"
+              src="/images/android-chrome-512x512.png"
+              alt="chinjanggg"
+              title="chinjanggg so cute!"
+              width="150px"
+            />
+          </div>
+          <div class="form-group">
+            <label for="dev"><h5>Developer</h5> </label>
+            <input
+              type="text"
+              class="form-control"
+              name="dev"
+              value="chinjanggg (so cute)"
+              readonly
+            />
+          </div>
+          <div class="form-group">
+            <label for="email"><h5>E-mail</h5> </label>
+            <input
+              type="text"
+              class="form-control"
+              name="email"
+              value="chinjanggg@spdigito.com"
+              readonly
+            />
+          </div>
+          <div class="form-group">
+            <label for="motto"><h5>Motto</h5> </label>
+            <input
+              type="text"
+              class="form-control"
+              name="motto"
+              value="always praise the peach"
+              readonly
+            />
+          </div>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>

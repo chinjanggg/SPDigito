@@ -1,0 +1,46 @@
+<!-- Patient image -->
+<div class="pimg">
+  <i class="fas fa-user-circle fa-7x"></i>
+</div>
+<!-- Patient ID -->
+<div class="form-group">
+  <label for="pid">Patient ID</label>
+  <input
+    type="text"
+    class="form-control"
+    name="pid"
+    value="<%= pid %>"
+    readonly
+  />
+</div>
+<!-- Patient Name-Surname -->
+<div class="form-row">
+  <div class="form-group col-sm-6 col-md-6 col-lg-6">
+    <label for="fname">First Name</label>
+    <input
+      type="text"
+      class="form-control"
+      name="fname"
+      value="<%= pinfo.name %>"
+      readonly
+    />
+  </div>
+  <div class="form-group col-sm-6 col-md-6 col-lg-6">
+    <label for="surname">Surname</label>
+    <input
+      type="text"
+      class="form-control"
+      name="surname"
+      value="<%= pinfo.surname %>"
+      readonly
+    />
+  </div>
+</div>
+<!-- Patient Address -->
+<div class="form-group">
+  <label for="address">Address</label>
+  <textarea class="form-control" name="address" readonly>
+<%= pinfo.street %> <%= pinfo.city %>
+<%= pinfo.country %> <%= pinfo.zipcode %></textarea
+  >
+</div>
