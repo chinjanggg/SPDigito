@@ -29,7 +29,7 @@ def main(argv):
     image_path = "./uploads/"
     mon_save_path = image_path+"monitor/"
     digit_save_path = image_path+"digits/"
-    model_path = "../../model"
+    model_path = "../model"
 
     #Load Image
     try:
