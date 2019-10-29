@@ -13,28 +13,16 @@
     readonly
   />
 </div>
-<!-- Patient Name-Surname -->
-<div class="form-row">
-  <div class="form-group col-sm-6 col-md-6 col-lg-6">
-    <label for="fname">First Name</label>
-    <input
-      type="text"
-      class="form-control"
-      name="fname"
-      value="<%= pinfo.name %>"
-      readonly
-    />
-  </div>
-  <div class="form-group col-sm-6 col-md-6 col-lg-6">
-    <label for="surname">Surname</label>
-    <input
-      type="text"
-      class="form-control"
-      name="surname"
-      value="<%= pinfo.surname %>"
-      readonly
-    />
-  </div>
+<!-- Patient Name -->
+<div class="form-group">
+  <label for="name">Full Name</label>
+  <input
+    type="text"
+    class="form-control"
+    name="fname"
+    value="<%= pinfo.name %>"
+    readonly
+  />
 </div>
 <!-- Patient Address -->
 <div class="form-group">
