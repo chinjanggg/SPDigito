@@ -10,6 +10,19 @@ router.get("/", (req, res) => {
   res.render("index", { title: "SP Digito" });
 });
 
+router.get("/error", (req, res) => {
+  res.render("error", { title: "Error" });
+});
+
+//Get patient data
+router.get("/patientdata", (req, res) => {
+  var pid = req.query.pid;
+  var pinfo = get_pdata(pid);
+  res.statusMessage = JSON.stringify(pinfo);
+  console.log(res.statusMessage);
+  res.status(200).end();
+});
+
 //----------------Route for Manual----------------//
 router.get("/manualform", (req, res) => {
   var result = { sys: null, dia: null, pulse: null };
@@ -29,33 +42,41 @@ router.post("/postresult", (req, res) => {
   res.redirect("/mconfirmation");
 });
 
-//Show form result
-router.get("/medit", (req, res) => {
-  let sess = req.session;
-  var pid = sess.pid;
-  var result = sess.result;
-  var pinfo = get_pdata(pid);
-  res.render("medit", {
-    title: "Edit",
-    pid: pid,
-    pinfo: pinfo,
-    result: result
-  });
-});
-
 //Confirm
 router.get("/mconfirmation", (req, res) => {
   let sess = req.session;
-  var pid = sess.pid;
-  var result = sess.result;
-  var pinfo = get_pdata(pid);
+  if (sess.pid) {
+    var pid = sess.pid;
+    var result = sess.result;
+    var pinfo = get_pdata(pid);
 
-  res.render("mconfirmation", {
-    title: "Confirmation",
-    pid: pid,
-    pinfo: pinfo,
-    result: result
-  });
+    res.render("mconfirmation", {
+      title: "Confirmation",
+      pid: pid,
+      pinfo: pinfo,
+      result: result
+    });
+  } else {
+    res.redirect("/error");
+  }
+});
+
+//Show form result
+router.get("/medit", (req, res) => {
+  let sess = req.session;
+  if (sess.pid) {
+    var pid = sess.pid;
+    var result = sess.result;
+    var pinfo = get_pdata(pid);
+    res.render("medit", {
+      title: "Edit",
+      pid: pid,
+      pinfo: pinfo,
+      result: result
+    });
+  } else {
+    res.redirect("/error");
+  }
 });
 
 //----------------Route for OCR----------------//
@@ -89,30 +110,46 @@ router.get("/uploads/:upload", (req, res) => {
 
 router.get("/ocr/:pid/:img", digit_ocr);
 
+//Confirm
+router.get("/confirmation", (req, res) => {
+  let sess = req.session;
+  if (sess.pid) {
+    var img = sess.img;
+    var pid = sess.pid;
+    var result = sess.result;
+    var pinfo = get_pdata(pid);
+
+    res.render("confirmation", {
+      title: "Confirmation",
+      imagefile: "/uploads/" + img,
+      pid: pid,
+      pinfo: pinfo,
+      result: result
+    });
+  } else {
+    res.redirect("/error");
+  }
+});
+
 //OCR edit page
 router.get("/edit", (req, res) => {
   let sess = req.session;
-  var img = sess.img;
-  var pid = sess.pid;
-  var result = sess.result;
-  var pinfo = get_pdata(pid);
+  if (sess.pid) {
+    var img = sess.img;
+    var pid = sess.pid;
+    var result = sess.result;
+    var pinfo = get_pdata(pid);
 
-  res.render("edit", {
-    title: "Edit",
-    imagefile: "/uploads/" + img,
-    pid: pid,
-    pinfo: pinfo,
-    result: result
-  });
-});
-
-//Get patient data
-router.get("/patientdata", (req, res) => {
-  var pid = req.query.pid;
-  var pinfo = get_pdata(pid);
-  res.statusMessage = JSON.stringify(pinfo);
-  console.log(res.statusMessage);
-  res.status(200).end();
+    res.render("edit", {
+      title: "Edit",
+      imagefile: "/uploads/" + img,
+      pid: pid,
+      pinfo: pinfo,
+      result: result
+    });
+  } else {
+    res.redirect("/error");
+  }
 });
 
 //Recheck
@@ -125,23 +162,6 @@ router.post("/confirm", (req, res) => {
   sess.result.pulse = req.body.pulse;
 
   res.redirect("/confirmation");
-});
-
-//Confirm
-router.get("/confirmation", (req, res) => {
-  let sess = req.session;
-  var img = sess.img;
-  var pid = sess.pid;
-  var result = sess.result;
-  var pinfo = get_pdata(pid);
-
-  res.render("confirmation", {
-    title: "Confirmation",
-    imagefile: "/uploads/" + img,
-    pid: pid,
-    pinfo: pinfo,
-    result: result
-  });
 });
 
 //Save Result

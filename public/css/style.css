@@ -141,3 +141,8 @@ input[name="email"],
 input[name="motto"] {
   font-style: italic;
 }
+
+/*------------------------------- Error page -------------------------------*/
+.error {
+  line-height: 2em;
+}
