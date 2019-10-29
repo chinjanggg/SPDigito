@@ -29,6 +29,7 @@ nav {
 }
 .nav-item-container {
   padding-left: 20px;
+  outline: none;
 }
 .navbar-brand {
   background: -webkit-linear-gradient(#fff2b4, #ffc0b4);

@@ -170,20 +170,9 @@ router.post("/savedata", save_data);
 router.get("/contact", (req, res) => {
   res.render("contact", { title: "Contact" });
 });
-function mkprocess(req, res) {
-  var spawn = require("child_process").spawn;
 
-  var process = spawn("python", [
-    "./python/digit_recognize.py",
-    req.query.imgname
-  ]);
-  process.stdout.on("data", data => {
-    res.send(data.toString());
-  });
-}
-
+//----------------- function -----------------//
 //Get patient data
-
 function get_pdata(pid) {
   var pinfo;
   for (patient in pdata) {
@@ -264,6 +253,7 @@ function save_data(req, res) {
   pyshell.end((err, code, signal) => {
     if (err) {
       console.log(err);
+      res.redirect("/error");
     } else {
       //Clear session
       req.session.destroy(err => {
