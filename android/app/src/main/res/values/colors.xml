@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#343A40</color>
+    <color name="colorPrimaryDark">#212529</color>
+    <color name="colorAccent">#D81B60</color>
+    <color name="colorPrimaryText">#212529</color>
+    <color name="colorSecondaryText">#6C757D</color>
+    <color name="yellowPeach">#FFE5B4</color>
+    <color name="lightPeach">#B6FFE5B4</color>
+    <color name="middlePeach">#FFCCB4</color>
+    <color name="pinkPeach">#FFC0B4</color>
+    <color name="lightPinkPeach">#B6FFC0B4</color>
+    <color name="green">#C7E6C8</color>
+    <color name="Orange">#FFAE53</color>
+</resources>

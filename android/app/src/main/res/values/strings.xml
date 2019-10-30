@@ -1,0 +1,37 @@
+<resources>
+    <string name="app_name">SP Digito</string>
+    <string name="confirm">Confirm</string>
+    <string name="upload">Upload</string>
+    <string name="save">Save</string>
+    <string name="saved">Saved!</string>
+    <string name="edit">Edit</string>
+    <string name="cancel">Cancel</string>
+    <string name="cancelled">Cancelled</string>
+    <string name="sending">Sending...</string>
+    <string name="image_upload">Image Upload</string>
+    <string name="manual_input">Manual Input</string>
+    <string name="manual_form">Manual Form</string>
+    <string name="confirmation">Confirmation</string>
+    <string name="result">Result</string>
+    <string name="result_img">Result Image</string>
+    <string name="select_img">Selected Image</string>
+    <string name="patient_info">Patient Info</string>
+    <string name="patient_id">Patient ID</string>
+    <string name="patient_img">Patient Profile Photo</string>
+    <string name="full_name">Full name</string>
+    <string name="address">Address</string>
+    <string name="pressure_info">Pressure Info</string>
+    <string name="sys">Sys</string>
+    <string name="dia">Dia</string>
+    <string name="pulse">Pulse</string>
+    <string name="err_msg_pid">Patient ID is Incorrect!</string>
+    <string name="err_msg_val">Please Insert Value!</string>
+    <string name="err_msg_connection">No Internet Connection!</string>
+    <string name="err_msg_image">Error Selecting Image</string>
+    <string name="err_msg_no_img">No Picture Selected!</string>
+    <string name="err_msg_upload">Uploaded Failed!</string>
+    <string name="err_msg_load_data">Cannot Load Patient Data!</string>
+    <string name="err_msg_save">Error Saving!</string>
+    <string name="confirm_title">Confirm Saving?</string>
+    <string name="confirm_msg">Do you want to save the record?</string>
+</resources>
