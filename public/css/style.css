@@ -52,7 +52,7 @@ form {
   text-align: left;
 }
 .form-container {
-  max-width: 500px;
+  max-width: 450px;
   margin: auto;
 }
 input[name="pid"] {

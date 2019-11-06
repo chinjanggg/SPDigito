@@ -8,7 +8,7 @@
       <div class="form-container">
         <form class="border border-info" method="post" action="/postresult">
           <div class="form-group text-left">
-            <label for="pid"><h5>Patient ID</h5></label>
+            <label for="pid">Patient ID</label>
             <input
               type="text"
               class="form-control"
@@ -16,6 +16,7 @@
               pattern="(?:hr|HR)[0-9]{3}"
               title="eg. HR123"
               maxlength="5"
+              placeholder="hrxxx"
               required
             />
           </div>
@@ -23,7 +24,7 @@
           <%- include partials/resultedit.ejs %>
 
           <!-- Button -->
-          <%- include partials/editformbtn.ejs %>
+          <%- include partials/inputformbtn.ejs %>
         </form>
 
         <!-- Alternative method -->

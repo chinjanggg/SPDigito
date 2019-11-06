@@ -14,12 +14,12 @@ router.get("/error", (req, res) => {
   res.render("error", { title: "Error" });
 });
 
-//Get patient data
+//Get patient data for android
 router.get("/patientdata", (req, res) => {
   var pid = req.query.pid;
   var pinfo = get_pdata(pid);
+  console.log(pinfo);
   res.statusMessage = JSON.stringify(pinfo);
-  console.log(res.statusMessage);
   res.status(200).end();
 });
 
@@ -30,7 +30,6 @@ router.get("/manualform", (req, res) => {
 });
 
 router.post("/postresult", (req, res) => {
-  console.log(req.body);
   let sess = req.session;
   sess.pid = req.body.pid.toUpperCase();
   var result = { sys: 0, dia: 0, pulse: 0 };
@@ -38,7 +37,6 @@ router.post("/postresult", (req, res) => {
   result.dia = req.body.dia;
   result.pulse = req.body.pulse;
   sess.result = result;
-  console.log(req.session);
   res.redirect("/mconfirmation");
 });
 
@@ -61,7 +59,7 @@ router.get("/mconfirmation", (req, res) => {
   }
 });
 
-//Show form result
+//Edit form
 router.get("/medit", (req, res) => {
   let sess = req.session;
   if (sess.pid) {
@@ -80,7 +78,6 @@ router.get("/medit", (req, res) => {
 });
 
 //----------------Route for OCR----------------//
-
 router.get("/imageupload", (req, res) => {
   res.render("imageupload", { title: "Image Upload" });
 });
@@ -94,7 +91,6 @@ router.post("/upload", upload.single("upload"), (req, res) => {
   var img = req.file.filename;
   console.log("pid:", sess.pid);
   console.log("File", req.file);
-  console.log(sess.img);
   res.redirect("/ocr/" + pid + "/" + img);
   //res.redirect("/uploads/" + req.file.filename);
   return res.status(200);
