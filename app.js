@@ -17,8 +17,9 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(express.static("public"));
+app.use("/uploads", express.static(__dirname + "/uploads"));
 app.set("view engine", "ejs");
-app.use(favicon(path.join(__dirname, "public", "images", "favicon.ico")));
+app.use(favicon(path.join("public", "images", "favicon.ico")));
 
 app.use("/", router);
 

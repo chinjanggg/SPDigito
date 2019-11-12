@@ -26,10 +26,14 @@ def main(argv):
     img_file = argv
     img_name = img_file.split(".")[0]
     img_type = ".png"
-    image_path = "./uploads/"
+    image_path = "./uploads/" + img_name + "/"
     mon_save_path = image_path+"monitor/"
     digit_save_path = image_path+"digits/"
     model_path = "../model"
+
+    #Create dir for processed image
+    os.mkdir(mon_save_path)
+    os.mkdir(digit_save_path)
 
     #Load Image
     try:
@@ -43,9 +47,12 @@ def main(argv):
     #Image alignment
     
     #Align Image
-    ref_file = img_file
-    ref_image = cv2.imread(image_path+ref_file)
+    #ref_file = img_file
+    #ref_image = cv2.imread(image_path+ref_file)
+    ref_file = "./public/images/ref.png"
+    ref_image = cv2.imread(ref_file)
     align_img = align_image(load_image, ref_image)
+    cv2.imwrite(mon_save_path+img_name+" aligned"+img_type, align_img)
 
 
     #Find monitor
@@ -96,7 +103,7 @@ def main(argv):
             digits.append(digit_image)
             used_mon_image.append(image)
 
-            #cv2.imwrite(digit_save_path+img_name+" ndc"+str(i+1)+img_type, cnt_digit)
+            #cv2.imwrite(digit_save_path+img_name+str(i+1)+img_type, cnt_digit)
 
     #Print number of result        
     print("Get %d result(s)." %(len(digits)))

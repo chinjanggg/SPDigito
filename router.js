@@ -1,8 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const upload = require("./upload");
-const fs = require("fs");
 const pdata = require("./data/patient-data.json");
+const path = require("path");
 
 let { PythonShell } = require("python-shell");
 
@@ -85,23 +85,15 @@ router.get("/imageupload", (req, res) => {
 // Upload image
 router.post("/upload", upload.single("upload"), (req, res) => {
   let sess = req.session;
-  sess.pid = req.body.pid.toUpperCase();
-  sess.img = req.file.filename;
   var pid = req.body.pid.toUpperCase();
   var img = req.file.filename;
+  sess.pid = pid;
+  sess.img = img;
   console.log("pid:", sess.pid);
   console.log("File", req.file);
   res.redirect("/ocr/" + pid + "/" + img);
   //res.redirect("/uploads/" + req.file.filename);
   return res.status(200);
-});
-
-//Display image
-router.get("/uploads/:upload", (req, res) => {
-  file = req.params.upload;
-  var img = fs.readFileSync(__dirname + "/uploads/" + file);
-  res.writeHead(200, { "Content-Type": "image/png" });
-  res.end(img, "binary");
 });
 
 router.get("/ocr/:pid/:img", digit_ocr);
@@ -114,10 +106,12 @@ router.get("/confirmation", (req, res) => {
     var pid = sess.pid;
     var result = sess.result;
     var pinfo = get_pdata(pid);
+    var imgname = path.parse(img).name;
+    var imgpath = path.join("/uploads", imgname, img);
 
     res.render("confirmation", {
       title: "Confirmation",
-      imagefile: "/uploads/" + img,
+      imagefile: imgpath,
       pid: pid,
       pinfo: pinfo,
       result: result
@@ -135,10 +129,12 @@ router.get("/edit", (req, res) => {
     var pid = sess.pid;
     var result = sess.result;
     var pinfo = get_pdata(pid);
+    var imgname = path.parse(img).name;
+    var imgpath = path.join("/uploads", imgname, img);
 
     res.render("edit", {
       title: "Edit",
-      imagefile: "/uploads/" + img,
+      imagefile: imgpath,
       pid: pid,
       pinfo: pinfo,
       result: result
