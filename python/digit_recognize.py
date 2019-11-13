@@ -52,7 +52,7 @@ def main(argv):
     ref_file = "./public/images/ref.png"
     ref_image = cv2.imread(ref_file)
     align_img = align_image(load_image, ref_image)
-    cv2.imwrite(mon_save_path+img_name+" aligned"+img_type, align_img)
+    cv2.imwrite(mon_save_path+img_name+" 01 aligned"+img_type, align_img)
 
 
     #Find monitor
@@ -62,6 +62,11 @@ def main(argv):
     #size[2], size[3] = too large w&h
     require_width = 550
     lim_monitor_size = [125,125,250,300]
+    save_info = {
+        "path": mon_save_path,
+        "name": img_name,
+        "type": img_type
+    }
 
     blur_type = {
         1: None,
@@ -77,7 +82,7 @@ def main(argv):
     #Find monitor
     print("Finding monitor(s)...")
     cnts, d_cnts, contour_img, threshold_images, erode_images = \
-    find_monitor(align_img, blur_type[blur_opt], color_denoise, gray_denoise, require_width, lim_monitor_size)
+    find_monitor(align_img, blur_type[blur_opt], color_denoise, gray_denoise, require_width, lim_monitor_size, save_info)
 
 
     #Find digits
