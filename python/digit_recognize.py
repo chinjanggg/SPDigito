@@ -32,10 +32,12 @@ def main(argv):
     model_path = "../model"
 
     #Create dir for processed image
+    print("Create dir for processed image")
     os.mkdir(mon_save_path)
     os.mkdir(digit_save_path)
 
     #Load Image
+    print("Load image")
     try:
         load_image = cv2.imread(image_path+img_file)
         if(load_image is None):
@@ -47,10 +49,11 @@ def main(argv):
     #Image alignment
     
     #Align Image
-    #ref_file = img_file
-    #ref_image = cv2.imread(image_path+ref_file)
-    ref_file = "./public/images/ref.png"
-    ref_image = cv2.imread(ref_file)
+    print("Align image")
+    ref_file = img_file
+    ref_image = cv2.imread(image_path+ref_file)
+    #ref_file = "./public/images/ref.png"
+    #ref_image = cv2.imread(ref_file)
     align_img = align_image(load_image, ref_image)
     cv2.imwrite(mon_save_path+img_name+" 01 aligned"+img_type, align_img)
 
@@ -80,7 +83,7 @@ def main(argv):
     gray_denoise = True
 
     #Find monitor
-    print("Finding monitor(s)...")
+    print("Finding monitor")
     cnts, d_cnts, contour_img, threshold_images, erode_images = \
     find_monitor(align_img, blur_type[blur_opt], color_denoise, gray_denoise, require_width, lim_monitor_size, save_info)
 
@@ -95,15 +98,30 @@ def main(argv):
     group_cnts = []
     used_mon_image = []
     sort_cnts = []
+    save_info2 = {
+        "path": digit_save_path,
+        "name": img_name,
+        "type": img_type,
+        "order": str(0).zfill(2)
+    }
 
     #Find digits
     for i, image in enumerate(monitor_images):
-        #First parameter is contours
-        if(find_digit(image, gray_denoise) is None):
+        #Set order for img save
+        order = str(i+1).zfill(2)
+        save_info2["order"] = order
+
+        #Create subdir for each monitor image
+        subdir_path = digit_save_path+order+"/"
+        os.mkdir(subdir_path)
+        save_info2["path"] = subdir_path
+        cv2.imwrite(subdir_path+img_name+" monitor"+order+" 00"+img_type, image)
+
+        if(find_digit(image, gray_denoise, save_info2) is None):
             #Can't find all 3 rows
             continue
         else:
-            _, _, group_con, cnt_digit, digit_image = find_digit(image, gray_denoise)
+            _, _, group_con, cnt_digit, digit_image = find_digit(image, gray_denoise, save_info2)
             group_cnts.append(group_con)
             digits.append(digit_image)
             used_mon_image.append(image)
@@ -276,9 +294,11 @@ def main(argv):
     #Extract SYS DIA and PULSE and save
     #Convert int to str
     result = result.astype(str)
-    key = {0:"sys",
-           1:"dia",
-           2:"pulse"}
+    key = {
+        0:"sys",
+        1:"dia",
+        2:"pulse"
+    }
     
     
     for i, row in enumerate(result):
