@@ -12,7 +12,6 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -44,7 +43,9 @@ public class ImageConfirmationActivity extends AppCompatActivity {
         setContentView(R.layout.activity_image_confirmation);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
+        //Set action bar title and remove back button
         getSupportActionBar().setTitle(R.string.confirmation);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 
         pidCF = findViewById(R.id.pidCF);
         nameCF = findViewById(R.id.nameCF);

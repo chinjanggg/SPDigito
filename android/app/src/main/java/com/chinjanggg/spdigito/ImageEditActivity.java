@@ -13,7 +13,6 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -44,7 +43,9 @@ public class ImageEditActivity extends AppCompatActivity {
         setContentView(R.layout.activity_image_edit);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
+        //Set action bar title and remove back button
         getSupportActionBar().setTitle(R.string.edit);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 
         pidEdit = findViewById(R.id.pidEdit);
         nameEdit = findViewById(R.id.nameEdit);

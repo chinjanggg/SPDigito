@@ -25,7 +25,6 @@ import android.text.InputFilter;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -64,6 +63,7 @@ public class ImageUploadActivity extends AppCompatActivity {
     ApiService apiService;
     private ImageView imgSelect;
     private Bitmap imageBP;
+    private Uri contentURI;
     private static final int CAMERA = 1;
     private static final int GALLERY = 2;
     private String currentPhotoPath;
@@ -77,7 +77,9 @@ public class ImageUploadActivity extends AppCompatActivity {
         setContentView(R.layout.activity_image_upload);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
+        //Set action bar title and remove back button
         getSupportActionBar().setTitle(R.string.image_upload);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 
         btnSelect = findViewById(R.id.btnSelect);
         btnUpload = findViewById(R.id.btnUpload);
@@ -194,10 +196,10 @@ public class ImageUploadActivity extends AppCompatActivity {
 
     private void selectPicture() {
         AlertDialog.Builder pictureSelectDialog = new AlertDialog.Builder(this);
-        pictureSelectDialog.setTitle("Select Action");
+        pictureSelectDialog.setTitle(R.string.select_action);
         String[] items = {
-                "Take Picture From Camera",
-                "Select Picture From Gallery"
+                getString(R.string.take_picture),
+                getString(R.string.open_gallery)
         };
         pictureSelectDialog.setItems(items,
                 new DialogInterface.OnClickListener() {
@@ -297,6 +299,11 @@ public class ImageUploadActivity extends AppCompatActivity {
                         imageBP.compress(Bitmap.CompressFormat.PNG, 0, bos);
                         final byte[] bitmapData = bos.toByteArray();
 
+                        Bitmap resizeImage = resizeImage(imageBP);
+                        ByteArrayOutputStream bos2 = new ByteArrayOutputStream();
+                        resizeImage.compress(Bitmap.CompressFormat.PNG, 0, bos2);
+                        final byte[] bpData = bos2.toByteArray();
+
                         FileOutputStream fos = new FileOutputStream(file);
                         fos.write(bitmapData);
                         fos.flush();
@@ -307,6 +314,7 @@ public class ImageUploadActivity extends AppCompatActivity {
                         RequestBody name = RequestBody.create(MediaType.parse("text/plain"), "upload");
 
                         final String pid = pidInput.getText().toString();
+
                         RequestBody pidReq = RequestBody.create(MediaType.parse("text/plain"), pid);
                         Call<ResponseBody> req = apiService.postImage(pidReq, body, name);
                         req.enqueue(new Callback<ResponseBody>() {
@@ -318,19 +326,9 @@ public class ImageUploadActivity extends AppCompatActivity {
                                     Bundle extras = new Bundle();
                                     extras.putString("EXTRA_PID", pid);
                                     extras.putString("EXTRA_RESULT", response.message());
-                                    extras.putByteArray("EXTRA_IMAGE", bitmapData);
+                                    extras.putByteArray("EXTRA_IMAGE", bpData);
                                     intent.putExtras(extras);
                                     startActivity(intent);
-
-                                /*
-                                res = response.message();
-                                //res = "Uploaded Successfully!";
-                                result.setText(res);
-                                result.setTextColor(Color.BLUE);
-                                Toast.makeText(getApplicationContext(), res, Toast.LENGTH_SHORT).show();
-                                 */
-
-
                                 }
                             }
 
@@ -365,6 +363,23 @@ public class ImageUploadActivity extends AppCompatActivity {
 
         return activeNetwork != null && activeNetwork.isConnectedOrConnecting();
     }
+    private Bitmap resizeImage(Bitmap image) {
+        final int reducedSize = 200;
+        int width = image.getWidth();
+        int height = image.getHeight();
+        int newW, newH;
+        float ratio;
+        if(width > height) {
+            newW = reducedSize;
+            ratio = (float) (width / newW);
+            newH = (int) (height / ratio);
+        } else {
+            newH = reducedSize;
+            ratio = (float) (height / newH);
+            newW = (int) (width / ratio);
+        }
+        return Bitmap.createScaledBitmap(image, newW, newH, true);
+    }
 
     private boolean validatePID() {
         String pid = "";
@@ -385,8 +400,9 @@ public class ImageUploadActivity extends AppCompatActivity {
                 case CAMERA:
                     try {
                         File file = new File(currentPhotoPath);
+                        contentURI = Uri.fromFile(file);
                         imageBP = MediaStore.Images.Media.getBitmap(
-                                getApplicationContext().getContentResolver(), Uri.fromFile(file));
+                                getApplicationContext().getContentResolver(), contentURI);
                         setImageView(imageBP);
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -394,7 +410,7 @@ public class ImageUploadActivity extends AppCompatActivity {
                     break;
                 case GALLERY:
                     if (data != null) {
-                        Uri contentURI = data.getData();
+                        contentURI = data.getData();
                         currentPhotoPath = getPathFromURI(contentURI);
                         imageBP = BitmapFactory.decodeFile(currentPhotoPath);
                         setImageView(imageBP);

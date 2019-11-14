@@ -38,7 +38,9 @@ public class ManualConfirmationActivity extends AppCompatActivity {
         setContentView(R.layout.activity_manual_confirmation);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
+        //Set action bar title and remove back button
         getSupportActionBar().setTitle(R.string.confirmation);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 
         pidCF = findViewById(R.id.pidCF);
         nameCF = findViewById(R.id.nameCF);
@@ -94,7 +96,7 @@ public class ManualConfirmationActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-                Toast.makeText(getApplicationContext(), "Cannot Load Patient Data", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), R.string.err_msg_load_data, Toast.LENGTH_SHORT).show();
                 t.printStackTrace();
             }
         });
@@ -207,4 +209,5 @@ public class ManualConfirmationActivity extends AppCompatActivity {
             }
         }
     }
+
 }

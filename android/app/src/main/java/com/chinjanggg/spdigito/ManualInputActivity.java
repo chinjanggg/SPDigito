@@ -13,7 +13,6 @@ import android.text.InputFilter;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -35,7 +34,9 @@ public class ManualInputActivity extends AppCompatActivity {
         setContentView(R.layout.activity_manual_input);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
+        //Set action bar title and remove back button
         getSupportActionBar().setTitle(R.string.manual_form);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 
         pidInput = findViewById(R.id.pidInput);
         sysInput = findViewById(R.id.sysInput);

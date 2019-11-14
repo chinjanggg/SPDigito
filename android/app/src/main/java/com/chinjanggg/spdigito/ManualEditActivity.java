@@ -36,9 +36,11 @@ public class ManualEditActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_manual_edit);
-
-        getSupportActionBar().setTitle(R.string.edit);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
+        //Set action bar title and remove back button
+        getSupportActionBar().setTitle(R.string.edit);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 
         pidEdit = findViewById(R.id.pidEdit);
         nameEdit = findViewById(R.id.nameEdit);

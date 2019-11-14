@@ -8,9 +8,12 @@ import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.View;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 public class MainActivity extends AppCompatActivity {
 
     CardView btnUploadAct, btnManualAct;
+    FloatingActionButton btnCap;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,6 +37,14 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        btnCap = findViewById(R.id.btnCap);
+        btnCap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, CameraActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     private void goToUploadAct() {
