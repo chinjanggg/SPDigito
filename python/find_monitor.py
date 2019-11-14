@@ -45,17 +45,20 @@ def find_monitor(img, blur_opt, color_denoise_opt, gray_denoise_opt, require_wid
     erode_images = []
     
     #Convert image to jpg
+    print("Convert image to jpg encoding")
     jpg_enc = cv2.imencode(".jpg", img)
     enc_arr = np.array(jpg_enc[1], np.uint8)
     jpg_img = cv2.imdecode(enc_arr, cv2.IMREAD_COLOR)
     
     #Resize image to 550px-width
+    print("Resize image to 550px-width")
     new_h = int(new_w * img.shape[0] / img.shape[1])
     dim = (new_w, new_h)
     res_img = cv2.resize(jpg_img, dim)
     cv2.imwrite(save_path+img_name+" 02 resize"+img_type, res_img)
     
     #Blur image
+    print("Blur image")
     nblur = cv2.blur(res_img,(5,5))
     gblur = cv2.GaussianBlur(res_img,(5,5),0)
     mblur = cv2.medianBlur(res_img,5)
@@ -90,6 +93,7 @@ def find_monitor(img, blur_opt, color_denoise_opt, gray_denoise_opt, require_wid
     cv2.imwrite(save_path+img_name+" 05 gray"+img_type, gray_image)
     
     #Denoise grayscale
+    print("Denoise image")
     gray_denoise = cv2.fastNlMeansDenoising(gray_image, None, 10, 7, 21)
     dn_gray = {
         True: gray_denoise,
@@ -110,6 +114,7 @@ def find_monitor(img, blur_opt, color_denoise_opt, gray_denoise_opt, require_wid
     cv2.imwrite(save_path+img_name+" 08 hsv_mask"+img_type, mask)
     
     #Find Contour from canny edge and hsv
+    print("Find monitor")
     canny_cnt, _ = cv2.findContours(canny_edged, cv2.RETR_TREE, cv2.CHAIN_APPROX_NONE)    
     hsv_cnt, _ = cv2.findContours(mask, cv2.RETR_TREE, cv2.CHAIN_APPROX_NONE)
     contours = canny_cnt + hsv_cnt
@@ -145,9 +150,11 @@ def find_monitor(img, blur_opt, color_denoise_opt, gray_denoise_opt, require_wid
     cv2.imwrite(save_path+img_name+" 11 all_cnt"+img_type, image5)
     
     #Get distinct contour
+    print("Find possible monitor")
     d_contours = dist_contour(contours, lim_mon_size)   
     
     #Find Monitor
+    print("Process monitor")
     for i, contour in enumerate(d_contours):
         (x,y,w,h) = cv2.boundingRect(contour)
         
