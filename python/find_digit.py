@@ -213,5 +213,5 @@ def find_digit(img, denoise_opt, save_info):
 
             cv2.imwrite(save_name+" 07 select_cnt"+img_type, image2)
 
-            #return all contours, group contours, group contour without problem row(s), contour image, and group digits
-            return contours, g_cnts, group_con, image2, group_digit
+            #return all contours, group contours, group contour without problem row(s), resized image, contour image, and group digits
+            return contours, g_cnts, group_con, image, image2, group_digit

@@ -64,7 +64,7 @@ def main(argv):
     #size[0], size[1] = too small w&h
     #size[2], size[3] = too large w&h
     require_width = 550
-    lim_monitor_size = [125,125,250,300]
+    lim_monitor_size = [125,125,300,500]
     save_info = {
         "path": mon_save_path,
         "name": img_name,
@@ -92,6 +92,7 @@ def main(argv):
 
     #Compile all processed images to see which one will give the best result in finding digits
     monitor_images = threshold_images+erode_images
+    print("Get %d monitor(s)." %(len(monitor_images)))
 
     #Create a list for collecting digits from each image
     digits = []
@@ -121,10 +122,10 @@ def main(argv):
             #Can't find all 3 rows
             continue
         else:
-            _, _, group_con, cnt_digit, digit_image = find_digit(image, gray_denoise, save_info2)
+            _, _, group_con, resized_mon, cnt_digit, digit_image = find_digit(image, gray_denoise, save_info2)
             group_cnts.append(group_con)
             digits.append(digit_image)
-            used_mon_image.append(image)
+            used_mon_image.append(resized_mon)
 
             #cv2.imwrite(digit_save_path+img_name+str(i+1)+img_type, cnt_digit)
 
