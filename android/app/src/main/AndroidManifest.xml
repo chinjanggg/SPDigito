@@ -7,10 +7,14 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <uses-feature android:name="android.hardware.camera.autofocus" />
 
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
+        android:largeHeap="true"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
@@ -41,6 +45,20 @@
         </activity>
         <activity
             android:name=".ImageConfirmationActivity"
+            android:parentActivityName=".ImageUploadActivity"
+            tools:ignore="UnusedAttribute">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ImageUploadActivity" />
+        </activity>
+        <activity android:name=".ImagePreviewActivity"
+            android:parentActivityName=".CameraActivity"
+            tools:ignore="UnusedAttribute">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".CameraActivity" />
+        </activity>
+        <activity android:name=".CameraActivity"
             android:parentActivityName=".ImageUploadActivity"
             tools:ignore="UnusedAttribute">
             <meta-data

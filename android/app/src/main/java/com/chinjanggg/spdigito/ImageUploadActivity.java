@@ -61,8 +61,8 @@ import retrofit2.Retrofit;
 public class ImageUploadActivity extends AppCompatActivity {
 
     ApiService apiService;
-    private ImageView imgSelect;
-    private Bitmap imageBP;
+    public static ImageView imgSelect;
+    public static Bitmap imageBP;
     private Uri contentURI;
     private static final int CAMERA = 1;
     private static final int GALLERY = 2;
@@ -87,6 +87,8 @@ public class ImageUploadActivity extends AppCompatActivity {
         pidInput = findViewById(R.id.pidInput);
         imgSelect = findViewById(R.id.selectedImage);
         result = findViewById(R.id.resultTextView);
+
+        //setImageView(CameraActivity.bitmap);
 
         //Make pid CAP
         addFilter(pidInput, new InputFilter.AllCaps());
@@ -118,7 +120,6 @@ public class ImageUploadActivity extends AppCompatActivity {
             }
         });
 
-        askPermissions();
         initRetrofitClient();
     }
 
@@ -158,37 +159,7 @@ public class ImageUploadActivity extends AppCompatActivity {
         };
         pidInput.addTextChangedListener(watcher);
     }
-    private void askPermissions() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-            Dexter.withActivity(this)
-                    .withPermissions(
-                            Manifest.permission.CAMERA,
-                            Manifest.permission.READ_EXTERNAL_STORAGE,
-                            Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                    .withListener(new MultiplePermissionsListener() {
-                        @Override
-                        public void onPermissionsChecked(MultiplePermissionsReport report) {
-                            // check if all permissions are granted
-                            if (report.areAllPermissionsGranted()) {
-                                Toast.makeText(getApplicationContext(), "All permissions are granted by user!", Toast.LENGTH_SHORT).show();
-                            }
-                        }
 
-                        @Override
-                        public void onPermissionRationaleShouldBeShown(List<PermissionRequest> permissions, PermissionToken token) {
-                            token.continuePermissionRequest();
-                        }
-                    }).
-                    withErrorListener(new PermissionRequestErrorListener() {
-                        @Override
-                        public void onError(DexterError error) {
-                            Toast.makeText(getApplicationContext(), "Some Error! ", Toast.LENGTH_SHORT).show();
-                        }
-                    })
-                    .onSameThread()
-                    .check();
-        }
-    }
     private void initRetrofitClient() {
         Retrofit retrofit = NetworkClient.getRetrofitClient();
         apiService = retrofit.create(ApiService.class);
@@ -218,6 +189,7 @@ public class ImageUploadActivity extends AppCompatActivity {
         pictureSelectDialog.show();
     }
     private void takePictureFromCamera() {
+        /*
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (intent.resolveActivity(getPackageManager()) != null) {
             File imageFile = null;
@@ -235,6 +207,10 @@ public class ImageUploadActivity extends AppCompatActivity {
                 startActivityForResult(intent, CAMERA);
             }
         }
+
+         */
+        Intent intent = new Intent(ImageUploadActivity.this, CameraActivity.class);
+        startActivity(intent);
     }
     private void choosePictureFromGallery() {
         Intent intent = new Intent(Intent.ACTION_PICK);
@@ -256,25 +232,12 @@ public class ImageUploadActivity extends AppCompatActivity {
 
         return path;
     }
-    private void setImageView(Bitmap bp) {
+    public void setImageView(Bitmap bp) {
         if(bp != null) {
             imgSelect.setImageBitmap(bp);
         } else {
             Toast.makeText(this, "Image Error", Toast.LENGTH_SHORT).show();
         }
-    }
-    private File createImageFile() throws IOException {
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        String fileName = "JPEG_" + timeStamp + "_";
-        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-        File image = File.createTempFile(
-                fileName,
-                ".jpg",
-                storageDir
-        );
-
-        currentPhotoPath = image.getAbsolutePath();
-        return image;
     }
     private void removePicture() {
         imgSelect.setImageResource(0);
@@ -398,15 +361,8 @@ public class ImageUploadActivity extends AppCompatActivity {
             clearText();
             switch (requestCode) {
                 case CAMERA:
-                    try {
-                        File file = new File(currentPhotoPath);
-                        contentURI = Uri.fromFile(file);
-                        imageBP = MediaStore.Images.Media.getBitmap(
-                                getApplicationContext().getContentResolver(), contentURI);
-                        setImageView(imageBP);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
+                    //imageBP = CameraActivity.cropImage;
+                    //setImageView(imageBP);
                     break;
                 case GALLERY:
                     if (data != null) {
