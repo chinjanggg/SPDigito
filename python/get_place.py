@@ -22,6 +22,7 @@ def isXOverlap(contours, max_overlap):
 
 def isOnes(digit, left, right):
     (x,y,w,h) = cv2.boundingRect(digit)
+    #print(left, x, x+w, right)
     if((x > left) and (x+w >= right)):
         return True
     else:
@@ -39,25 +40,26 @@ def find_place(row_con, ones_right, tens_right):
     digit_num = len(row_con)
     
     if(digit_num == 1):
-        #If there's only 1 digit, it should be at ones' place, else, don't use this row
+        #Find whether it is at ones', tens', or hundreds' place
         if(isOnes(row_con[0], tens_right, ones_right)):
             row_place[2] = 1
+        elif(isTens(row_con[0], tens_right)):
+            row_place[1] = 1
         else:
-            #"This only 1 digit is not at ones' place."
-            pass
+            row_place[0] = 1
                 
     elif(digit_num == 2):
-        #Check if the last digit is at ones' place and the first digit is at tens' place?
-        #If not, don't use this row
         if(isOnes(row_con[1], tens_right, ones_right)):
+            #Last digit is at ones' place, then find first digit is at tens' or hundreds'
             if(isTens(row_con[0], tens_right)):
+                #First digit is at tens' place
                 row_place[1] = row_place[2] = 1
             else:
-                #"First digit is not at tens' place."
-                pass
+                #First digit is not at tens' place, so it must be at hundreds' place
+                row_place[0] = row_place[2] = 1
         else:
-            #"Second digit is not at ones' place."
-            pass
+            #Last digit is at tens' place, so first digit must be at hundreds' place
+            row_place[0] = row_place[1] = 1
         
     return row_place
 
@@ -66,6 +68,7 @@ def get_place(contours, monitor_width):
     max_overlap = int(monitor_width * 0.10) #Allow 10% of monitor width to be overlap
     furthest_right = int(monitor_width * 3/4)
     middle = int(monitor_width/2)
+    #print(monitor_width, middle, furthest_right)
 
     for row in contours:
         row_con = contours[row]

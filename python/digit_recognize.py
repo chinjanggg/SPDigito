@@ -64,7 +64,7 @@ def main(argv):
     #size[0], size[1] = too small w&h
     #size[2], size[3] = too large w&h
     require_width = 550
-    lim_monitor_size = [125,125,300,500]
+    lim_monitor_size = [180,200,300,500]
     save_info = {
         "path": mon_save_path,
         "name": img_name,
@@ -151,6 +151,7 @@ def main(argv):
         #print("Image", i+1)
         mon_width = used_mon_image[i].shape[1]
         place = get_place(group_cnts[i], mon_width)
+        print(place)
         if((place == 0).all()):
             digits.pop(i)
             used_mon_image.pop(i)
@@ -173,6 +174,7 @@ def main(argv):
         #Check if row could be used
         for n, row in enumerate(digit_place[i]):
             if(not (row==0).all()):
+                #Add digit in that row for concat
                 for image in digit[n]:
                     precon.append(image)
         precon_digit.append(precon)
@@ -250,7 +252,7 @@ def main(argv):
                     d_val[n] = d_val[n] * val
             else:
                 d_val[n] = -1
-        #print(d_val.reshape(3,3))
+        print(d_val.reshape(3,3))
 
         if(ocr_val):
             #If there is some digit value left, which it shouldn't, something wrong
@@ -271,18 +273,24 @@ def main(argv):
         #Compare 1 row a time in case there is cannot-be-used row
         for i in range(3):
             cmpr_row = [d_val[i] for d_val in digit_val if(not (d_val[i]==-1).all())]
-            for j in range(3):
-                cmpr_val = [val[j] for val in cmpr_row if(val[j] != -1)]
-                #Maybe there is no digit in hundreds' or tens' place, set it to 0
-                if(not cmpr_val):
-                    cmpr_val = [0]
-                print("Digit %d is" %((i*3)+j+1), cmpr_val)
+            #print(cmpr_row)
 
-                #Find mode
-                try:
-                    row_res[j] = mode(cmpr_val)
-                except:
-                    row_res[j] = 0
+            if(not cmpr_row):
+                #There is no any image which can find row value
+                pass
+            else:
+                for j in range(3):
+                    cmpr_val = [val[j] for val in cmpr_row if(val[j] != -1)]
+                    #Maybe there is no digit in that place, set it to 0
+                    if(not cmpr_val):
+                        cmpr_val = [0]
+                    print("Digit %d is" %((i*3)+j+1), cmpr_val)
+
+                    #Find mode
+                    try:
+                        row_res[j] = mode(cmpr_val)
+                    except:
+                        row_res[j] = 0
 
             #Set row result
             result[i] = row_res
