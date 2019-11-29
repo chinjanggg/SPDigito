@@ -32,22 +32,6 @@
         android:layout_height="80dp">
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/btnSwitch"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginEnd="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_toStartOf="@+id/btnCamera"
-            android:layout_toLeftOf="@+id/btnCamera"
-            android:src="@drawable/ic_sync_alt200dp"
-            android:tint="@color/colorPrimary"
-            app:backgroundTint="?attr/colorButtonNormal"
-            app:elevation="0dp"
-            app:fabSize="mini"
-            app:maxImageSize="18dp" />
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/btnCamera"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
