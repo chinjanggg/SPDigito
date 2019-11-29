@@ -107,8 +107,8 @@ def find_monitor(img, blur_opt, color_denoise_opt, gray_denoise_opt, require_wid
     
     #HSV
     hsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
-    lower_blue = np.array([38, 86, 0])
-    upper_blue = np.array([121, 255, 255])
+    lower_blue = np.array([85, 100, 20])
+    upper_blue = np.array([130, 255, 255])
     mask = cv2.inRange(hsv, lower_blue, upper_blue)
     cv2.imwrite(save_path+img_name+" 08 hsv"+img_type, hsv)
     cv2.imwrite(save_path+img_name+" 08 hsv_mask"+img_type, mask)
