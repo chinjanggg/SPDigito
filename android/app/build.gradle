@@ -29,6 +29,7 @@ dependencies {
     implementation 'com.squareup.retrofit2:converter-gson:2.5.0'
     implementation 'info.androidhive:fontawesome:0.0.5'
     implementation "androidx.cardview:cardview:1.0.0"
+    implementation 'androidx.exifinterface:exifinterface:1.1.0'
 
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     testImplementation 'junit:junit:4.12'
