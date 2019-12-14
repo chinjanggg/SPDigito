@@ -50,10 +50,10 @@ def main(argv):
     
     #Align Image
     print("Align image")
-    ref_file = img_file
-    ref_image = cv2.imread(image_path+ref_file)
-    #ref_file = "./public/images/ref.png"
-    #ref_image = cv2.imread(ref_file)
+    #ref_file = img_file
+    #ref_image = cv2.imread(image_path+ref_file)
+    ref_file = "./public/images/ref.png"
+    ref_image = cv2.imread(ref_file)
     align_img = align_image(load_image, ref_image)
     cv2.imwrite(mon_save_path+img_name+" 01 aligned"+img_type, align_img)
 
@@ -84,14 +84,14 @@ def main(argv):
 
     #Find monitor
     print("Finding monitor")
-    cnts, d_cnts, contour_img, threshold_images, erode_images = \
+    cnts, d_cnts, contour_img, threshold_images, dilate_images = \
     find_monitor(align_img, blur_type[blur_opt], color_denoise, gray_denoise, require_width, lim_monitor_size, save_info)
 
 
     #Find digits
 
     #Compile all processed images to see which one will give the best result in finding digits
-    monitor_images = threshold_images+erode_images
+    monitor_images = threshold_images+dilate_images
     print("Get %d monitor(s)." %(len(monitor_images)))
 
     #Create a list for collecting digits from each image
@@ -226,6 +226,7 @@ def main(argv):
         no_of_digit = len(precon_digit[i])
         res = pd.DataFrame(ocr_model.predict(test,batch_size=no_of_digit))
         res = pd.DataFrame(res.idxmax(axis = 1))
+        print(list(res[0]))
         ocr_digits.append(list(res[0]))
         
     

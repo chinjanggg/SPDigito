@@ -188,12 +188,12 @@ def find_digit(img, denoise_opt, save_info):
                         row_name[key]+str(i+1)+img_type, crop_image)
 
                         #Inverse image
-                        bw_image = cv2.bitwise_not(crop_image)
-                        cv2.imwrite(save_name+" 09 bitwise_digit row"+str(key+1)+" "+\
-                        row_name[key]+str(i+1)+img_type, bw_image)
+                        # bw_image = cv2.bitwise_not(crop_image)
+                        # cv2.imwrite(save_name+" 09 bitwise_digit row"+str(key+1)+" "+\
+                        # row_name[key]+str(i+1)+img_type, bw_image)
 
                         #Create border
-                        border_image = add_border(bw_image, image_size, border)
+                        border_image = add_border(crop_image, image_size, border)
                         cv2.imwrite(save_name+" 10 border_digit row"+str(key+1)+" "+\
                         row_name[key]+str(i+1)+img_type, border_image)
 

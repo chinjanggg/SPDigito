@@ -42,7 +42,7 @@ def find_monitor(img, blur_opt, color_denoise_opt, gray_denoise_opt, require_wid
     img_type = save_info["type"]
 
     threshold_images = []
-    erode_images = []
+    dilate_images = []
     
     #Convert image to jpg
     print("Convert image to jpg encoding")
@@ -86,6 +86,8 @@ def find_monitor(img, blur_opt, color_denoise_opt, gray_denoise_opt, require_wid
     
     #Image for crop
     image2 = image.copy()
+    #Inverse color
+    image2 = cv2.bitwise_not(image2)
 
     #Pre-processing image
     #Grayscale
@@ -172,9 +174,9 @@ def find_monitor(img, blur_opt, color_denoise_opt, gray_denoise_opt, require_wid
         
         for n in range(2,8):
             kernel = np.ones((n,n), np.uint8)
-            erode_image = cv2.erode(th_image, kernel, iterations=1)
-            erode_images.append(erode_image)
-            cv2.imwrite(save_path+img_name+" 14 erode"+str(i+1)+" kernel"+str(n)+img_type, erode_image)
+            dilate_image = cv2.dilate(th_image, kernel, iterations=1)
+            dilate_images.append(dilate_image)
+            cv2.imwrite(save_path+img_name+" 14 dilate"+str(i+1)+" kernel"+str(n)+img_type, dilate_image)
         
         #print("Monitor image",i+1,x,y,w,h)
 
@@ -183,5 +185,5 @@ def find_monitor(img, blur_opt, color_denoise_opt, gray_denoise_opt, require_wid
 
     cv2.imwrite(save_path+img_name+" 12 dist_cnt"+img_type, image)
     
-    #return all contours, distinct contours, contoured img, list of threshold imgs, and list of eroded imgs
-    return contours, d_contours, image, threshold_images, erode_images
+    #return all contours, distinct contours, contoured img, list of threshold imgs, and list of dilated imgs
+    return contours, d_contours, image, threshold_images, dilate_images
