@@ -7,6 +7,7 @@ import os, sys
 from keras.models import model_from_json
 import pandas as pd
 from statistics import mode
+import random
 
 from align_image import align_image
 from find_monitor import find_monitor
@@ -291,7 +292,8 @@ def main(argv):
                     try:
                         row_res[j] = mode(cmpr_val)
                     except:
-                        row_res[j] = 0
+                        #Cannot find mode, pick one from list randomly
+                        row_res[j] = random.choice(cmpr_val)
 
             #Set row result
             result[i] = row_res
