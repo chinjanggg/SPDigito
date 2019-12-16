@@ -170,7 +170,7 @@ def find_monitor(img, blur_opt, color_denoise_opt, gray_denoise_opt, require_wid
         threshold_images.append(th_image)
         cv2.imwrite(save_path+img_name+" 13 threshold"+str(i+1)+img_type, th_image)
 
-        #Erode image
+        #Dilate image
         
         for n in range(2,8):
             kernel = np.ones((n,n), np.uint8)
