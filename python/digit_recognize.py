@@ -8,6 +8,7 @@ from keras.models import model_from_json
 import pandas as pd
 from statistics import mode
 import random
+import time
 
 from align_image import align_image
 from find_monitor import find_monitor
@@ -22,6 +23,8 @@ def main(argv):
         "dia": 0,
         "pulse": 0
     }
+
+    start_time = time.time()
 
     #Set up image
     img_file = argv
@@ -52,7 +55,6 @@ def main(argv):
     #Align Image
     print("Align image")
     #ref_file = img_file
-    #ref_image = cv2.imread(image_path+ref_file)
     ref_file = "./public/images/ref.png"
     ref_image = cv2.imread(ref_file)
     align_img = align_image(load_image, ref_image)
@@ -65,7 +67,7 @@ def main(argv):
     #size[0], size[1] = too small w&h
     #size[2], size[3] = too large w&h
     require_width = 550
-    lim_monitor_size = [180,200,300,500]
+    lim_monitor_size = [125,125,300,500]
     save_info = {
         "path": mon_save_path,
         "name": img_name,
@@ -136,6 +138,10 @@ def main(argv):
     #In case there is no image with 3 rows
     #Stop the program
     if(not digits):
+        end_time = time.time()
+        total_time = end_time - start_time
+        print(total_time)
+
         return print(final_res)
 
     
@@ -163,6 +169,10 @@ def main(argv):
     #In case there is no image left
     #Stop the program
     if(not digits):
+        end_time = time.time()
+        total_time = end_time - start_time
+        print(total_time)
+
         return print(final_res)
         
         
@@ -315,6 +325,10 @@ def main(argv):
     
     for i, row in enumerate(result):
         final_res[key[i]] = int(row[0]+row[1]+row[2])
+
+    end_time = time.time()
+    total_time = end_time - start_time
+    print(total_time)
 
     return print(final_res)
 
