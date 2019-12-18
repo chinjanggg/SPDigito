@@ -280,7 +280,11 @@ def main(argv):
     row_res = np.zeros(3, dtype = np.int32)
     #No need to compare if there is only one result set
     if(len(digit_val) == 1):
-        result = digit_val[0]
+        for i,row in enumerate(digit_val[0]):
+            for j,digit in enumerate(row):
+                if(digit == -1):
+                    digit = 0
+                result[i][j] = digit
     else:
         #Compare 1 row a time in case there is cannot-be-used row
         for i in range(3):
